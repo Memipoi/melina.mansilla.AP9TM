@@ -19,24 +19,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class ClientController {
-    @Autowired
-    private ClientRepository clientRepository;
+public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
-    @GetMapping("/clients")
-    public List<ClientDTO> getClients(){
-        List<Client>allClients = clientRepository.findAll();
-        List<ClientDTO> convertedList = allClients.stream().map(currentClient -> new ClientDTO(currentClient)).collect(Collectors.toList());
-        return convertedList;
-    }
-    @GetMapping("/clients/{id}")
-    public ClientDTO getClientById(@PathVariable Long id){
-        Optional<Client> clientOptional = clientRepository.findById(id);
-        return new ClientDTO(clientOptional.get());
-    }
 
-/*    @GetMapping("/accounts")
+    @GetMapping("/accounts")
     public List<AccountDTO> getAccount(){
         List<Account>allAccount = accountRepository.findAll();
         List<AccountDTO> convertedList = allAccount.stream().map(currentAccount -> new AccountDTO(currentAccount)).collect(Collectors.toList());
@@ -46,5 +33,5 @@ public class ClientController {
     public AccountDTO getAccountById(@PathVariable Long id){
         Optional<Account> accountOptional = accountRepository.findById(id);
         return new AccountDTO(accountOptional.get());
-    }*/
+    }
 }
