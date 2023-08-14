@@ -27,8 +27,7 @@ public class ClientController {
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
         List<Client>allClients = clientRepository.findAll();
-        List<ClientDTO> convertedList = allClients.stream().map(currentClient -> new ClientDTO(currentClient)).collect(Collectors.toList());
-        return convertedList;
+        return allClients.stream().map(currentClient -> new ClientDTO(currentClient)).collect(Collectors.toList());
     }
     @GetMapping("/clients/{id}")
     public ClientDTO getClientById(@PathVariable Long id){
@@ -36,15 +35,4 @@ public class ClientController {
         return new ClientDTO(clientOptional.get());
     }
 
-/*    @GetMapping("/accounts")
-    public List<AccountDTO> getAccount(){
-        List<Account>allAccount = accountRepository.findAll();
-        List<AccountDTO> convertedList = allAccount.stream().map(currentAccount -> new AccountDTO(currentAccount)).collect(Collectors.toList());
-        return convertedList;
-    }
-    @GetMapping("/accounts/{id}")
-    public AccountDTO getAccountById(@PathVariable Long id){
-        Optional<Account> accountOptional = accountRepository.findById(id);
-        return new AccountDTO(accountOptional.get());
-    }*/
 }
