@@ -21,7 +21,7 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository,CardRepository cardRepository){
 		return (args )-> {
 
 	         Loan hipotecario = new Loan("Hipotecario", 500000.00,List.of(12,24,36,48,60));
@@ -48,6 +48,15 @@ public class HomebankingApplication {
 			clientLoanRepository.save(loanPersonal);
 			clientLoanRepository.save(loanPersonal2);
 			clientLoanRepository.save(loanAtomotriz);
+
+			Card card = new Card(client.getFirstName() + client.getLastName(), CardType.DEBIT,CardColor.GOLD,"3325-6745-7876-4445",990,LocalDate.now(),LocalDate.now().plusYears(5),client);
+			Card card2 = new Card(client.getFirstName() + client.getLastName(), CardType.CREDIT,CardColor.TITANIUM,"3326-6748-7879-4447",980,LocalDate.now(),LocalDate.now().plusYears(5),client);
+			Card card3 = new Card(client2.getFirstName() + client2.getLastName(), CardType.CREDIT,CardColor.SILVER,"3366-6798-7179-4847",700,LocalDate.now(),LocalDate.now().plusYears(5),client2);
+			cardRepository.save(card);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
+
+
 
 			Account account = new Account("VIN001",LocalDate.now(),5000.00,client);
 			Account account2 = new Account("VIN002",LocalDate.now().minusDays(1),7500.00,client);
