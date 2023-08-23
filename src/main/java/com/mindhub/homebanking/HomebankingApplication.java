@@ -4,10 +4,12 @@ import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +18,8 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
-
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
@@ -34,12 +37,17 @@ public class HomebankingApplication {
 
 
 
-			Client client = new Client("41875618","Melba","Morel","melbamorel@gmail.com");
-			Client client2 = new Client("41875615","Melina Antonella","Mansilla","melinpucca@live.com");
+			Client client = new Client("41875618","Melba","Morel","melbamorel@gmail.com", passwordEncoder.encode("abc"));
+			Client client2 = new Client("41875615","Melina Antonella","Mansilla","melinpucca@live.com", passwordEncoder.encode("cba"));
+			Client client3 = new Client("00000000","admin","admin","admin@admin.com", passwordEncoder.encode("admin"));
+
 
 
 			clientRepository.save(client);
 			clientRepository.save(client2);
+			clientRepository.save(client3);
+
+
 			ClientLoan loanhipotecario= new ClientLoan(400000.00,60,client,hipotecario);
 			ClientLoan loanPersonal= new ClientLoan(50000.00,12,client,personal);
 			ClientLoan loanPersonal2= new ClientLoan(100000.00,24,client2,personal);
