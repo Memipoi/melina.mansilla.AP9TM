@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,6 +41,11 @@ public class ClientController {
     @GetMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+    }
+
+    @GetMapping("/clients/current/accounts")
+    public Set<AccountDTO>getClientAccounts(Authentication authentication){
+        return new ClientDTO(clientRepository.findByEmail(authentication.getName())).getAccounts();
     }
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createNewAccount(Authentication authentication){
