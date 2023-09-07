@@ -27,7 +27,7 @@ public class HomebankingApplication {
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository,CardRepository cardRepository){
 		return (args )-> {
 
-	         Loan hipotecario = new Loan("Hipotecario", 500000.00,List.of(12,24,36,48,60));
+			Loan hipotecario = new Loan("Hipotecario", 500000.00,List.of(12,24,36,48,60));
 			Loan personal = new Loan("Personal", 100000.00,List.of(6,12,24));
 			Loan automotriz = new Loan("Automotriz", 300000.00,List.of(6,12,24,36));
 
