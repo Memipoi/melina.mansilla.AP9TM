@@ -7,6 +7,7 @@ import com.mindhub.homebanking.repository.AccountRepository;
 import com.mindhub.homebanking.repository.CardRepository;
 import com.mindhub.homebanking.repository.ClientRepository;
 import com.mindhub.homebanking.repository.TransactionRepository;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,10 +71,13 @@ public class ClientController {
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count() == 3) {
             return new ResponseEntity<>("403 prohibido", HttpStatus.FORBIDDEN);
         }
-        Card card = new Card(client.getFirstName() + client.getLastName(), cardType,cardColor,Math.round(1000 + Math.random()*9000) + "-" + Math.round(1000 + Math.random()*9000) + "-" + Math.round(1000 + Math.random()*9000) + "-" + Math.round(1000 + Math.random()*9000), Math.toIntExact(Math.round(100 + Math.random()*900)),LocalDate.now(),LocalDate.now().plusYears(5),client);
+        Card card = new Card(client.getFirstName() + client.getLastName(), cardType,cardColor, CardUtils.getCardNumber(), CardUtils.getCVV(),LocalDate.now(),LocalDate.now().plusYears(5),client);
         cardRepository.save(card);
         return new ResponseEntity<>("201 creada", HttpStatus.CREATED);
     }
+
+
+
     @GetMapping("/clients/{id}")
     public ClientDTO getClientById(@PathVariable Long id){
         Optional<Client> clientOptional = clientRepository.findById(id);
